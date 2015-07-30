@@ -11,6 +11,9 @@ dependencies:
     # cache docker image locally
     - "if [[ -e ~/cache/docker.tar ]]; then docker load -i ~/cache/docker.tar; fi"
 
+    # update timestamps to preserve docker cache
+    - ./bin/git-set-file-times
+
     # build image and then save it to the cache
     - docker build -t capybara_webkit_docker_circleci .
     - docker save capybara_webkit_docker_circleci > ~/cache/docker.tar
