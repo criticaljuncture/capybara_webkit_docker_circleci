@@ -1,0 +1,20 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  cache_directories:
+    - ~/cache/
+  override:
+    - mkdir -p ~/cache
+
+    # cache docker image locally
+    - "if [[ -e ~/cache/docker.tar ]]; then docker load -i ~/cache/docker.tar; fi"
+
+    # build image and then save it to the cache
+    - docker build -t capybara_webkit_docker_circleci .
+    - docker save capybara_webkit_docker_circleci > ~/cache/docker.tar
+
+test:
+  override:
+    - docker run capybara_webkit_docker_circleci rspec
