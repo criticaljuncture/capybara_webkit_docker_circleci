@@ -17,7 +17,14 @@ end
 
 Capybara.run_server = true
 Capybara.javascript_driver = :webkit
+Capybara.server_port = 12345
 
 RSpec.configure do |c|
   c.treat_symbols_as_metadata_keys_with_true_values = true
+
+  c.before(:each) do
+    host = 'test.host'
+    Capybara.current_session.driver.reset!
+    Capybara.app_host = "http://" + host + ":#{Capybara.server_port}"
+  end
 end

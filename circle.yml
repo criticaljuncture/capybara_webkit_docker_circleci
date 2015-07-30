@@ -20,4 +20,4 @@ dependencies:
 
 test:
   override:
-    - docker run capybara_webkit_docker_circleci rspec
+    - docker run --add-host 'test.host:127.0.0.1' capybara_webkit_docker_circleci rspec
